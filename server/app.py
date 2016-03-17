@@ -15,6 +15,7 @@ class User(db.Model):
     name = db.Column(db.String(64), unique=True)
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True)
+    flames = db.relationship('Flame', backref='user', lazy='dynamic')
         
     @property
     def serialize(self):
@@ -26,6 +27,7 @@ class Flame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(140))
     pub_date = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 user1 = User(name='andrzej')
 user2 = User(name='adam')
