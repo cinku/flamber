@@ -21,6 +21,11 @@ class User(db.Model):
         return {
             'name': self.name
         }
+        
+class Flame(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(140))
+    pub_date = db.Column(db.DateTime)
 
 user1 = User(name='andrzej')
 user2 = User(name='adam')
