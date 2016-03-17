@@ -7,8 +7,9 @@ app.config.from_object('config')
 api = Api(app)
 db = SQLAlchemy(app)
 
-@app.route("/")
-def index():
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
     return send_from_directory('static', 'index.html')
     
 class User(db.Model):
