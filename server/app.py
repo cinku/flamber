@@ -30,13 +30,9 @@ class Flame(db.Model):
     pub_date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-user1 = User(name='andrzej')
-user2 = User(name='adam')
-user3 = User(name='janusz')
-userArr = [user1, user2, user3]
 class Users(Resource):
     def get(self):
-        return jsonify({'user': [i.serialize for i in userArr]})
+        return jsonify({'user': [i.serialize for i in User.query.all()]})
         
 api.add_resource(Users, '/users')
 
