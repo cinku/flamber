@@ -67,3 +67,4 @@ target/
 /Lib
 pip*
 static/
+flamber.db
