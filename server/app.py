@@ -1,16 +1,20 @@
 from flask import Flask, send_from_directory, jsonify
 from flask_restful import Resource, Api
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 api = Api(app)
+db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
     return send_from_directory('static', 'index.html')
     
-class User():
-    def __init__(self, name):
-        self.name = name
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    username = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(64), unique=True)
         
     @property
     def serialize(self):
@@ -18,9 +22,9 @@ class User():
             'name': self.name
         }
 
-user1 = User('andrzej')
-user2 = User('adam')
-user3 = User('janusz')
+user1 = User(name='andrzej')
+user2 = User(name='adam')
+user3 = User(name='janusz')
 userArr = [user1, user2, user3]
 class Users(Resource):
     def get(self):
