@@ -21,7 +21,9 @@ class User(db.Model):
     @property
     def serialize(self):
         return {
-            'name': self.name
+            'name': self.name,
+            'username': self.username,
+            'email': self.email
         }
         
 class Flame(db.Model):
