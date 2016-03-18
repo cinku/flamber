@@ -33,12 +33,26 @@ class Flame(db.Model):
     text = db.Column(db.String(140))
     pub_date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'text': self.text,
+            'pub_date': self.pub_date,
+            'user': self.user_id
+        }
 
 class Users(Resource):
     def get(self):
         return jsonify({'user': [i.serialize for i in User.query.all()]})
         
+class Flames(Resource):
+    def get(self):
+        return jsonify({'flame': [i.serialize for i in Flame.query.all()]})
+        
 api.add_resource(Users, '/users')
+api.add_resource(Flames, '/flames')
 
 if __name__ == "__main__":
     app.run(debug=True)
