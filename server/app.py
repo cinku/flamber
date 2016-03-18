@@ -47,7 +47,7 @@ class Users(Resource):
     def get(self):
         return jsonify({'user': [i.serialize for i in User.query.all()]})
         
-class UserUpdate(Resource):
+class UsersUpdate(Resource):
     def get(self, user_id):
         return jsonify({'user': User.query.get(user_id).serialize})
         
@@ -61,8 +61,8 @@ class FlamesUpdate(Resource):
         
 api.add_resource(Users, '/users')
 api.add_resource(Flames, '/flames')
-api.add_resource(UserUpdate, '/user/<int:user_id>')
-api.add_resource(FlamesUpdate, '/flame/<int:flame_id>')
+api.add_resource(UsersUpdate, '/users/<int:user_id>')
+api.add_resource(FlamesUpdate, '/flames/<int:flame_id>')
 
 if __name__ == "__main__":
     app.run(debug=True)
