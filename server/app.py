@@ -47,12 +47,22 @@ class Users(Resource):
     def get(self):
         return jsonify({'user': [i.serialize for i in User.query.all()]})
         
+class UserUpdate(Resource):
+    def get(self, user_id):
+        return jsonify({'user': User.query.get(user_id).serialize})
+        
 class Flames(Resource):
     def get(self):
         return jsonify({'flame': [i.serialize for i in Flame.query.all()]})
         
+class FlamesUpdate(Resource):
+    def get(self, flame_id):
+        return jsonify({'flame': Flame.query.get(flame_id).serialize})
+        
 api.add_resource(Users, '/users')
 api.add_resource(Flames, '/flames')
+api.add_resource(UserUpdate, '/user/<int:user_id>')
+api.add_resource(FlamesUpdate, '/flame/<int:flame_id>')
 
 if __name__ == "__main__":
     app.run(debug=True)
