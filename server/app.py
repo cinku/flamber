@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, jsonify
+from flask import Flask, send_from_directory, jsonify, request
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -52,6 +52,9 @@ class UsersUpdate(Resource):
         return jsonify({'user': User.query.get(user_id).serialize})
         
 class Flames(Resource):
+    def post(self):
+        print(request.json['flame'])
+        return 200
     def get(self):
         return jsonify({'flame': [i.serialize for i in Flame.query.all()]})
         
