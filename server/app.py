@@ -53,7 +53,10 @@ class UsersUpdate(Resource):
         
 class Flames(Resource):
     def post(self):
-        print(request.json['flame'])
+        flame = request.json['flame']
+        f = Flame(text=flame['text'], user_id=1)
+        db.session.add(f)
+        db.session.commit()
         return 200
     def get(self):
         return jsonify({'flame': [i.serialize for i in Flame.query.all()]})
