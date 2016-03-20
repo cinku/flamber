@@ -26,7 +26,9 @@ class User(db.Model):
             'id': self.id,
             'name': self.name,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            # TODO start using marshmallow bby gurl
+            # 'flames': [i.serialize for i in Flame.query.filter_by(user_id=self.id)]
         }
         
 class Flame(db.Model):
