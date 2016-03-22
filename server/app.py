@@ -57,7 +57,7 @@ class Users(Resource):
     def get(self):
         return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
         
-class UsersUpdate(Resource):
+class UsersId(Resource):
     def get(self, user_id):
         return jsonify({'user': UserSchema().dump(User.query.get(user_id)).data})
         
@@ -71,14 +71,14 @@ class Flames(Resource):
     def get(self):
         return jsonify({'flame': [FlameSchema().dump(i).data for i in Flame.query.all()]})
         
-class FlamesUpdate(Resource):
+class FlamesId(Resource):
     def get(self, flame_id):
         return jsonify({'flame': FlameSchema().dump(Flame.query.get(flame_id)).data})
         
 api.add_resource(Users, '/users')
 api.add_resource(Flames, '/flames')
-api.add_resource(UsersUpdate, '/users/<int:user_id>')
-api.add_resource(FlamesUpdate, '/flames/<int:flame_id>')
+api.add_resource(UsersId, '/users/<int:user_id>')
+api.add_resource(FlamesId, '/flames/<int:flame_id>')
 
 if __name__ == "__main__":
     app.run(debug=True)
