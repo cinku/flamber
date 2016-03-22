@@ -56,6 +56,11 @@ class FlameSchema(Schema):
 class Users(Resource):
     def get(self):
         return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
+    def post(self):
+        user = UserSchema().load(request.json['user']).data
+        # db.session.add(user)
+        # db.session.commit()
+        return 200
         
 class UsersId(Resource):
     def get(self, user_id):
