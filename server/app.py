@@ -5,7 +5,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from marshmallow import Schema, fields
 from datetime import datetime
-
+from passlib.apps import custom_app_context as pwd_context
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -27,6 +27,12 @@ class User(db.Model):
     email = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     flames = db.relationship('Flame', backref='user', lazy='dynamic')
+    
+    def hash_password(self, password):
+        self.password_hash = pwd_context.encrypt(password)
+        
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
         
 class UserSchema(Schema):
     id = fields.Integer()
