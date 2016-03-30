@@ -1,13 +1,4 @@
 @import "bootstrap";
 
-.global-nav {
-    background-color: #fff;
-}
-
-.app-container {
-    background-color: #F5F8FA;
-}
-
-.nav-list > li > a:hover {
-    color: #fa9200 !important;
-}
+@import "layout";
+@import "nav";
