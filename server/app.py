@@ -62,10 +62,11 @@ class FlameSchema(Schema):
 class Users(Resource):
     def get(self):
         return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
+        
     def post(self):
         user = UserSchema().load(request.json['user']).data
-        # db.session.add(user)
-        # db.session.commit()
+        db.session.add(user)
+        db.session.commit()
         return 200
         
 class UsersId(Resource):
@@ -79,12 +80,19 @@ class Flames(Resource):
         db.session.add(f)
         db.session.commit()
         return 200
+        
     def get(self):
         return jsonify({'flame': [FlameSchema().dump(i).data for i in Flame.query.all()]})
         
 class FlamesId(Resource):
     def get(self, flame_id):
         return jsonify({'flame': FlameSchema().dump(Flame.query.get(flame_id)).data})
+        
+    def delete(self, flame_id):
+        f = Flame.query.get(flame_id)
+        db.session.delete(f)
+        db.session.commit()
+        return 200
         
 api.add_resource(Users, '/users')
 api.add_resource(Flames, '/flames')
