@@ -67,7 +67,7 @@ class UserSchema(Schema):
     name = fields.String()
     username = fields.String()
     email = fields.Email()
-    # flames = fields.Nested('FlameSchema', exclude=['user'], many=True)
+    flames = fields.Nested('FlameSchema', exclude=['user'], many=True)
     
     class Meta:
         type_ = 'users'
@@ -89,14 +89,14 @@ class FlameSchema(Schema):
     id = fields.Integer()
     text = fields.String()
     pub_date = fields.DateTime()
-    # user = fields.Nested('UserSchema', only=['id'])
+    user = fields.Nested('UserSchema', only=['id'])
     
     class Meta:
         type_ = 'flames'
         strict = True
 
 class Users(Resource):
-    # decorators = [jwt_required()]
+    decorators = [jwt_required()]
     def get(self):
         return UserSchema(many=True).dump(User.query.all()).data
         
@@ -111,7 +111,7 @@ class UsersId(Resource):
         return jsonify({'user': UserSchema().dump(User.query.get(user_id)).data})
         
 class Flames(Resource):
-    # decorators = [jwt_required()]
+    decorators = [jwt_required()]
     def post(self):
         flame = request.json['flame']
         f = Flame(text=flame['text'], user_id=1)
