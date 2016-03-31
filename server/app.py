@@ -6,11 +6,15 @@ from flask_migrate import Migrate, MigrateCommand
 from marshmallow import Schema, fields
 from datetime import datetime
 from passlib.apps import custom_app_context as pwd_context
+from flask.ext.httpauth import HTTPBasicAuth
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
 
 app = Flask(__name__)
 app.config.from_object('config')
 api = Api(app)
 db = SQLAlchemy(app)
+auth = HTTPBasicAuth()
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
