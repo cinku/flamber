@@ -48,8 +48,8 @@ module.exports = function(environment) {
     identificationField: 'username',
     passwordField: 'password',
     tokenExpireName: 'exp',
-    tokenPropertyName: 'token',
-    authorizationPrefix: 'Bearer ',
+    tokenPropertyName: 'access_token',
+    authorizationPrefix: 'JWT ',
     authorizationHeaderName: 'Authorization',
     headers: {},
   };
