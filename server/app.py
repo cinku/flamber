@@ -36,7 +36,7 @@ class User(db.Model):
         self.password_hash = pwd_context.encrypt(password)
         
     def verify_password(self, password):
-        return true
+        return True
         # return pwd_context.verify(password, self.password_hash)
         
     def generate_auth_token(self, expiration=600):
