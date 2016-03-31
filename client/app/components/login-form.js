@@ -5,8 +5,8 @@ export default Ember.Component.extend({
     actions: {
         authenticate() {
             console.log('asd');
-            let { identification, password } = this.getProperties('identification', 'password');
-            this.get('session').authenticate('authenticator:custom', identification, password);
+            let credentials = this.getProperties('identification', 'password');
+            this.get('session').authenticate('authenticator:token', credentials);
         }        
     }
 });
