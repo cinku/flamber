@@ -6,7 +6,7 @@ export default Ember.Component.extend({
         authenticate() {
             console.log('asd');
             let credentials = this.getProperties('identification', 'password');
-            this.get('session').authenticate('authenticator:token', credentials);
+            this.get('session').authenticate('authenticator:jwt', credentials);
         }        
     }
 });
