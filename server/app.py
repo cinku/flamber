@@ -9,12 +9,12 @@ from passlib.apps import custom_app_context as pwd_context
 from flask.ext.httpauth import HTTPBasicAuth
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
+from flask_jwt import JWT, jwt_required, current_identity
 
 app = Flask(__name__)
 app.config.from_object('config')
 api = Api(app)
 db = SQLAlchemy(app)
-auth = HTTPBasicAuth()
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
@@ -36,18 +36,30 @@ class User(db.Model):
         self.password_hash = pwd_context.encrypt(password)
         
     def verify_password(self, password):
-        return True
-        # return pwd_context.verify(password, self.password_hash)
+        return pwd_context.verify(password, self.password_hash)
         
-    def generate_auth_token(self, expiration=600):
-        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'id': self.id})
+    # def generate_auth_token(self, expiration=600):
+    #     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    #     return s.dumps({'id': self.id})
         
-@auth.verify_password
-def verify_password(username_or_token, password):
-    user = User.query.filter_by(username = "asd").first()
+# @auth.verify_password
+# def verify_password(username_or_token, password):
+#     user = User.query.filter_by(username = "asd").first()
+#     g.user = user
+#     return True
+
+def authenticate(username, password):
+    user = User.query.filter_by(username=username).first()
+    if not user or not user.verify_password(password):
+        return None
     g.user = user
-    return True
+    return user
+
+def identity(payload):
+    user_id = payload['identity']
+    return User.query.filter_by(id=user_id).first()
+    
+jwt = JWT(app, authenticate, identity)
         
 class UserSchema(Schema):
     id = fields.Integer()
@@ -75,6 +87,7 @@ class FlameSchema(Schema):
     user = fields.Nested('UserSchema', only=['id'])
 
 class Users(Resource):
+    decorators = [jwt_required()]
     def get(self):
         return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
         
@@ -89,7 +102,7 @@ class UsersId(Resource):
         return jsonify({'user': UserSchema().dump(User.query.get(user_id)).data})
         
 class Flames(Resource):
-    decorators = [auth.login_required]
+    decorators = [jwt_required()]
     def post(self):
         flame = request.json['flame']
         f = Flame(text=flame['text'], user_id=1)
@@ -110,17 +123,15 @@ class FlamesId(Resource):
         db.session.commit()
         return 200
 
-class Auth(Resource):
-    decorators = [auth.login_required]
-    def post(self):
-        token = g.user.generate_auth_token(600)
-        return jsonify({'token': token.decode('ascii'), 'duration': 600})
+# class Auth(Resource):
+#     def post(self):
+#         token = g.user.generate_auth_token(600)
+#         return jsonify({'token': token.decode('ascii'), 'duration': 600})
         
 api.add_resource(Users, '/users')
 api.add_resource(Flames, '/flames')
 api.add_resource(UsersId, '/users/<int:user_id>')
 api.add_resource(FlamesId, '/flames/<int:flame_id>')
-api.add_resource(Auth, '/api/token-auth/')
 
 if __name__ == "__main__":
     app.run(debug=True)
