@@ -3,7 +3,8 @@ from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from marshmallow import Schema, fields
+from marshmallow import fields
+from marshmallow_jsonapi import Schema
 from datetime import datetime
 from passlib.apps import custom_app_context as pwd_context
 from flask.ext.httpauth import HTTPBasicAuth
@@ -66,7 +67,11 @@ class UserSchema(Schema):
     name = fields.String()
     username = fields.String()
     email = fields.Email()
-    flames = fields.Nested('FlameSchema', exclude=['user'], many=True)
+    # flames = fields.Nested('FlameSchema', exclude=['user'], many=True)
+    
+    class Meta:
+        type_ = 'users'
+        strict = True
         
 class Flame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -84,12 +89,16 @@ class FlameSchema(Schema):
     id = fields.Integer()
     text = fields.String()
     pub_date = fields.DateTime()
-    user = fields.Nested('UserSchema', only=['id'])
+    # user = fields.Nested('UserSchema', only=['id'])
+    
+    class Meta:
+        type_ = 'flames'
+        strict = True
 
 class Users(Resource):
-    decorators = [jwt_required()]
+    # decorators = [jwt_required()]
     def get(self):
-        return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
+        return UserSchema(many=True).dump(User.query.all()).data
         
     def post(self):
         user = UserSchema().load(request.json['user']).data
@@ -102,7 +111,7 @@ class UsersId(Resource):
         return jsonify({'user': UserSchema().dump(User.query.get(user_id)).data})
         
 class Flames(Resource):
-    decorators = [jwt_required()]
+    # decorators = [jwt_required()]
     def post(self):
         flame = request.json['flame']
         f = Flame(text=flame['text'], user_id=1)
@@ -111,7 +120,7 @@ class Flames(Resource):
         return 200
         
     def get(self):
-        return jsonify({'flame': [FlameSchema().dump(i).data for i in Flame.query.all()]})
+        return FlameSchema(many=True).dump(Flame.query.all()).data
         
 class FlamesId(Resource):
     def get(self, flame_id):
