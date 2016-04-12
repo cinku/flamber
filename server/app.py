@@ -1,10 +1,16 @@
-from flask import Flask, send_from_directory, jsonify, request
+from flask import Flask, send_from_directory, jsonify, request, g
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from marshmallow import Schema, fields
+from marshmallow import fields
+from marshmallow_jsonapi import Schema
 from datetime import datetime
+from passlib.apps import custom_app_context as pwd_context
+from flask.ext.httpauth import HTTPBasicAuth
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
+from flask_jwt import JWT, jwt_required, current_identity
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -26,6 +32,35 @@ class User(db.Model):
     email = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     flames = db.relationship('Flame', backref='user', lazy='dynamic')
+    
+    def hash_password(self, password):
+        self.password_hash = pwd_context.encrypt(password)
+        
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
+        
+    # def generate_auth_token(self, expiration=600):
+    #     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    #     return s.dumps({'id': self.id})
+        
+# @auth.verify_password
+# def verify_password(username_or_token, password):
+#     user = User.query.filter_by(username = "asd").first()
+#     g.user = user
+#     return True
+
+def authenticate(username, password):
+    user = User.query.filter_by(username=username).first()
+    if not user or not user.verify_password(password):
+        return None
+    g.user = user
+    return user
+
+def identity(payload):
+    user_id = payload['identity']
+    return User.query.filter_by(id=user_id).first()
+    
+jwt = JWT(app, authenticate, identity)
         
 class UserSchema(Schema):
     id = fields.Integer()
@@ -33,6 +68,10 @@ class UserSchema(Schema):
     username = fields.String()
     email = fields.Email()
     flames = fields.Nested('FlameSchema', exclude=['user'], many=True)
+    
+    class Meta:
+        type_ = 'users'
+        strict = True
         
 class Flame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -51,10 +90,15 @@ class FlameSchema(Schema):
     text = fields.String()
     pub_date = fields.DateTime()
     user = fields.Nested('UserSchema', only=['id'])
+    
+    class Meta:
+        type_ = 'flames'
+        strict = True
 
 class Users(Resource):
+    decorators = [jwt_required()]
     def get(self):
-        return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
+        return UserSchema(many=True).dump(User.query.all()).data
         
     def post(self):
         user = UserSchema().load(request.json['user']).data
@@ -67,6 +111,7 @@ class UsersId(Resource):
         return jsonify({'user': UserSchema().dump(User.query.get(user_id)).data})
         
 class Flames(Resource):
+    decorators = [jwt_required()]
     def post(self):
         flame = request.json['flame']
         f = Flame(text=flame['text'], user_id=1)
@@ -75,7 +120,7 @@ class Flames(Resource):
         return 200
         
     def get(self):
-        return jsonify({'flame': [FlameSchema().dump(i).data for i in Flame.query.all()]})
+        return FlameSchema(many=True).dump(Flame.query.all()).data
         
 class FlamesId(Resource):
     def get(self, flame_id):
@@ -86,6 +131,11 @@ class FlamesId(Resource):
         db.session.delete(f)
         db.session.commit()
         return 200
+
+# class Auth(Resource):
+#     def post(self):
+#         token = g.user.generate_auth_token(600)
+#         return jsonify({'token': token.decode('ascii'), 'duration': 600})
         
 api.add_resource(Users, '/users')
 api.add_resource(Flames, '/flames')

@@ -42,6 +42,21 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
-
+  
+  ENV['ember-simple-auth'] = {
+    authorizer: 'authorizer:token'  
+  };
+  
+  ENV['ember-simple-auth-token'] = {
+    serverTokenEndpoint: '/auth',
+    identificationField: 'username',
+    passwordField: 'password',
+    tokenExpireName: 'exp',
+    tokenPropertyName: 'access_token',
+    authorizationPrefix: 'JWT ',
+    authorizationHeaderName: 'Authorization',
+    headers: {},
+  };
+  
   return ENV;
 };
