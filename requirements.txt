@@ -12,7 +12,6 @@ Jinja2==2.8
 Mako==1.0.4
 MarkupSafe==0.23
 marshmallow==2.6.1
-marshmallow-jsonapi==0.6.0
 passlib==1.6.5
 PyJWT==1.4.0
 python-dateutil==2.5.0

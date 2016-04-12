@@ -3,8 +3,7 @@ from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from marshmallow import fields
-from marshmallow_jsonapi import Schema
+from marshmallow import Schema, fields
 from datetime import datetime
 from passlib.apps import custom_app_context as pwd_context
 from flask.ext.httpauth import HTTPBasicAuth
@@ -68,10 +67,6 @@ class UserSchema(Schema):
     username = fields.String()
     email = fields.Email()
     flames = fields.Nested('FlameSchema', exclude=['user'], many=True)
-    
-    class Meta:
-        type_ = 'users'
-        strict = True
         
 class Flame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -90,15 +85,11 @@ class FlameSchema(Schema):
     text = fields.String()
     pub_date = fields.DateTime()
     user = fields.Nested('UserSchema', only=['id'])
-    
-    class Meta:
-        type_ = 'flames'
-        strict = True
 
 class Users(Resource):
     decorators = [jwt_required()]
     def get(self):
-        return UserSchema(many=True).dump(User.query.all()).data
+        return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
         
     def post(self):
         user = UserSchema().load(request.json['user']).data
@@ -120,7 +111,7 @@ class Flames(Resource):
         return 200
         
     def get(self):
-        return FlameSchema(many=True).dump(Flame.query.all()).data
+        return jsonify({'flame': [FlameSchema().dump(i).data for i in Flame.query.all()]})
         
 class FlamesId(Resource):
     def get(self, flame_id):
