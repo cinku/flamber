@@ -6,10 +6,10 @@ from flask_migrate import Migrate, MigrateCommand
 from marshmallow import Schema, fields
 from datetime import datetime
 from passlib.apps import custom_app_context as pwd_context
-from flask.ext.httpauth import HTTPBasicAuth
-from itsdangerous import (TimedJSONWebSignatureSerializer
-                          as Serializer, BadSignature, SignatureExpired)
-from flask_jwt import JWT, jwt_required, current_identity
+# from flask.ext.httpauth import HTTPBasicAuth
+# from itsdangerous import (TimedJSONWebSignatureSerializer
+#                           as Serializer, BadSignature, SignatureExpired)
+# from flask_jwt import JWT, jwt_required, current_identity
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -32,11 +32,11 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
     flames = db.relationship('Flame', backref='user', lazy='dynamic')
     
-    def hash_password(self, password):
-        self.password_hash = pwd_context.encrypt(password)
+    # def hash_password(self, password):
+    #     self.password_hash = pwd_context.encrypt(password)
         
-    def verify_password(self, password):
-        return pwd_context.verify(password, self.password_hash)
+    # def verify_password(self, password):
+    #     return pwd_context.verify(password, self.password_hash)
         
     # def generate_auth_token(self, expiration=600):
     #     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
@@ -48,18 +48,18 @@ class User(db.Model):
 #     g.user = user
 #     return True
 
-def authenticate(username, password):
-    user = User.query.filter_by(username=username).first()
-    if not user or not user.verify_password(password):
-        return None
-    g.user = user
-    return user
+# def authenticate(username, password):
+#     user = User.query.filter_by(username=username).first()
+#     if not user or not user.verify_password(password):
+#         return None
+#     g.user = user
+#     return user
 
-def identity(payload):
-    user_id = payload['identity']
-    return User.query.filter_by(id=user_id).first()
+# def identity(payload):
+#     user_id = payload['identity']
+#     return User.query.filter_by(id=user_id).first()
     
-jwt = JWT(app, authenticate, identity)
+#jwt = JWT(app, authenticate, identity)
         
 class UserSchema(Schema):
     id = fields.Integer()
@@ -87,9 +87,9 @@ class FlameSchema(Schema):
     user = fields.Nested('UserSchema', only=['id'])
 
 class Users(Resource):
-    decorators = [jwt_required()]
+    # decorators = [jwt_required()]
     def get(self):
-        return jsonify({'user': [UserSchema().dump(i).data for i in User.query.all()]})
+        return jsonify({'users': [UserSchema().dump(i).data for i in User.query.all()]})
         
     def post(self):
         user = UserSchema().load(request.json['user']).data
@@ -102,7 +102,7 @@ class UsersId(Resource):
         return jsonify({'user': UserSchema().dump(User.query.get(user_id)).data})
         
 class Flames(Resource):
-    decorators = [jwt_required()]
+    # decorators = [jwt_required()]
     def post(self):
         flame = request.json['flame']
         f = Flame(text=flame['text'], user_id=1)
@@ -115,7 +115,7 @@ class Flames(Resource):
         
 class FlamesId(Resource):
     def get(self, flame_id):
-        return jsonify({'flame': FlameSchema().dump(Flame.query.get(flame_id)).data})
+        return jsonify({'flames': FlameSchema().dump(Flame.query.get(flame_id)).data})
         
     def delete(self, flame_id):
         f = Flame.query.get(flame_id)
