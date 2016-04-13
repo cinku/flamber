@@ -1,0 +1,12 @@
+{
+  "name": "flamber",
+  "homepage": "https://github.com/cinku/flamber",
+  "authors": [
+    "cinkowski <cinq2ez@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.3",
+    "angular-route": "^1.5.3"
+  }
+}

@@ -66,4 +66,5 @@ target/
 /Scripts/
 /Lib
 pip*
+/server/static/scripts/
 flamber.db
