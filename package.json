@@ -1,0 +1,23 @@
+{
+  "name": "flamber",
+  "version": "1.0.0",
+  "description": "Twitter clone created for learning purposes of ember.js.\r Made with Ember.js and python-flask.",
+  "main": "flamber.js",
+  "dependencies": {
+    "typescript": "^1.8.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cinku/flamber.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cinku/flamber/issues"
+  },
+  "homepage": "https://github.com/cinku/flamber#readme"
+}
