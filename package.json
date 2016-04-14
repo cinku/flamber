@@ -4,6 +4,7 @@
   "description": "Twitter clone created for learning purposes of ember.js.\r Made with Ember.js and python-flask.",
   "main": "flamber.js",
   "dependencies": {
+    "tslint": "^3.7.4",
     "typescript": "^1.8.10"
   },
   "devDependencies": {},
