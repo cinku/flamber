@@ -7,9 +7,10 @@
   "license": "MIT",
   "dependencies": {
     "angular": "^1.5.4",
-    "angular-ui-router": "^0.2.18"
+    "angular-ui-router": "^0.2.18",
+    "angular-material": "^1.0.7"
   },
   "resolutions": {
-    "angular": "1.5.3"
+    "angular": "^1.5.4"
   }
 }
