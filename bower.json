@@ -6,8 +6,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "angular-route": "^1.5.3",
-    "angular": "^1.5.4"
+    "angular": "^1.5.4",
+    "angular-ui-router": "^0.2.18"
   },
   "resolutions": {
     "angular": "1.5.3"
