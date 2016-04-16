@@ -69,3 +69,4 @@ pip*
 /bower_components/
 /node_modules/
 flamber.db
+/release/
