@@ -2,13 +2,13 @@ var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var merge = require('merge2');
 
-var tsProject = ts.createProject('tsconfig.json', {
-    declaration: true,
-    noExternalResolve: true
-});
+// var tsProject = ts.createProject('tsconfig.json', {
+//     declaration: true,
+//     noExternalResolve: true
+// });
 
 gulp.task('compile_ts', function() {
-//   var tsProject = ts.createProject('tsconfig.json');
+	var tsProject = ts.createProject('tsconfig.json');
 	var tsResult = tsProject.src()
 		.pipe(ts(tsProject));
  

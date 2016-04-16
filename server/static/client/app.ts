@@ -1,3 +1,3 @@
 'use strict';
 
-// angular.module('flamberApp', []);
+angular.module('flamberApp', []);
