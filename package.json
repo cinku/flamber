@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-typescript": "^2.13.0"
+    "gulp-typescript": "^2.13.0",
+    "merge2": "^1.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
