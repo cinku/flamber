@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Twitter clone created for learning purposes of ember.js.\r Made with Ember.js and python-flask.",
   "main": "flamber.js",
+  "typings": "./typings.d.ts",
   "dependencies": {
     "tslint": "^3.7.4",
     "typescript": "^1.8.10"
