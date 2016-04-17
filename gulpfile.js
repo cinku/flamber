@@ -13,8 +13,8 @@ gulp.task('compile_ts', function() {
 		.pipe(ts(tsProject));
  
 	return merge([
-		tsResult.dts.pipe(gulp.dest('release')),
-		tsResult.js.pipe(gulp.dest('release'))
+		tsResult.dts.pipe(gulp.dest('server/static/release')),
+		tsResult.js.pipe(gulp.dest('server/static/release'))
 	]);
 });
 
