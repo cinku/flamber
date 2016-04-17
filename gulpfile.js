@@ -1,11 +1,7 @@
 var gulp = require('gulp');
 var ts = require('gulp-typescript');
+var sass = require('gulp-sass');
 var merge = require('merge2');
-
-// var tsProject = ts.createProject('tsconfig.json', {
-//     declaration: true,
-//     noExternalResolve: true
-// });
 
 gulp.task('compile_ts', function() {
 	var tsProject = ts.createProject('tsconfig.json');
@@ -18,8 +14,18 @@ gulp.task('compile_ts', function() {
 	]);
 });
 
-gulp.task('watch_ts', function () {
-  gulp.watch(['./server/static/**/*.ts'], ['default']);
+gulp.task('compile_sass', function() {
+	return gulp.src('./server/static/css/**/*.scss')
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest('server/static/release'))
 });
 
-gulp.task('default', ['compile_ts']);
+gulp.task('watch_ts', function () {
+  	gulp.watch(['./server/static/**/*.ts'], ['default']);
+});
+
+gulp.task('watch_sass', function() {
+	gulp.watch(['./server/static/**/*.scss'], ['default']);
+});
+
+gulp.task('default', ['compile_ts', 'compile_sass']);

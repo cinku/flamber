@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-sass": "^2.2.0",
     "gulp-typescript": "^2.13.0",
     "merge2": "^1.0.2"
   },
