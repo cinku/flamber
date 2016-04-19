@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, jsonify, request, g
+from flask import Flask, send_from_directory, jsonify, request, g, render_template
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
@@ -22,7 +22,7 @@ manager.add_command('db', MigrateCommand)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
-    return send_from_directory('static', 'index.html')
+    return render_template('index.html')
     
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

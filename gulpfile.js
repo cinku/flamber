@@ -9,23 +9,23 @@ gulp.task('compile_ts', function() {
 		.pipe(ts(tsProject));
  
 	return merge([
-		tsResult.dts.pipe(gulp.dest('server/static/release')),
-		tsResult.js.pipe(gulp.dest('server/static/release'))
+		tsResult.dts.pipe(gulp.dest('static/release')),
+		tsResult.js.pipe(gulp.dest('static/release'))
 	]);
 });
 
 gulp.task('compile_sass', function() {
-	return gulp.src('./server/static/css/**/*.scss')
+	return gulp.src('./static/css/**/*.scss')
 		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest('server/static/release'))
+		.pipe(gulp.dest('static/release'))
 });
 
 gulp.task('watch_ts', function () {
-  	gulp.watch(['./server/static/**/*.ts'], ['default']);
+  	gulp.watch(['./static/**/*.ts'], ['default']);
 });
 
 gulp.task('watch_sass', function() {
-	gulp.watch(['./server/static/**/*.scss'], ['default']);
+	gulp.watch(['./static/**/*.scss'], ['default']);
 });
 
 gulp.task('default', ['compile_ts', 'compile_sass']);
