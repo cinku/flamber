@@ -1,7 +1,16 @@
-namespace main.controllers {
+namespace main.controllers { 
+        interface Flames {
+            id: number;
+            name: string;
+            pub_date: string;
+        }   
     export class HomeController {
-        constructor(private $scope: ng.IScope){
-            console.log('a');
+        private flames: Flames[];
+        
+        constructor(private $scope: ng.IScope, private $http: ng.IHttpService){
+            $http.get('/flames').success((response) => {
+               console.log(response);
+            });
         }
     }
 }
