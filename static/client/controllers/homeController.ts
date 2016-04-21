@@ -8,8 +8,8 @@ namespace main.controllers {
         private flames: Flames[];
         
         constructor(private $scope: ng.IScope, private $http: ng.IHttpService){
-            $http.get('/flames').success((response) => {
-               console.log(response);
+            $http.get('/flames').success((response: Flames[]) => {
+               this.flames = response;
             });
         }
     }
