@@ -1,6 +1,8 @@
 $((): void =>  {
     let flamberApp: angular.IModule = angular.module('flamberApp', ['ui.router', 'ngMaterial']);
     
+    flamberApp.controller("HomeController", main.controllers.HomeController);
+    
     flamberApp.config(['$urlRouterProvider', '$stateProvider', ($urlRouterProvider: ng.ui.IUrlRouterProvider,
                                                                 $stateProvider: ng.ui.IStateProvider) => {
         
@@ -8,7 +10,7 @@ $((): void =>  {
         $stateProvider.state('home', {
             url: "/",
             templateUrl: "static/client/partials/home.html",
-            controller: main.controllers.HomeController
+            controller: "HomeController"
         })
         .state('about', {
             url: "/about",

@@ -1,15 +1,9 @@
-namespace main.controllers { 
-        export interface Flames {
-            id: number;
-            name: string;
-            pub_date: string;
-        }
-           
+namespace main.controllers {            
     export class HomeController {
-        flames: Flames[];
+        flames: flamber.interfaces.Flames[];
         
         constructor(private $scope: ng.IScope, private $http: ng.IHttpService){
-            $http.get('/flames').success((response: Flames[]) => {
+            $http.get('/flames').then((response: flamber.interfaces.Flames[]) => {
                this.flames = response;
             });
         }

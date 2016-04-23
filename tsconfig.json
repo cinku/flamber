@@ -6,6 +6,8 @@
   "files": [
     "./typings.d.ts",
     
+    "static/client/interfaces/flames.ts",
+    
     "static/client/controllers/homeController.ts",
     
     "static/client/app.ts"
