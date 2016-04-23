@@ -10,7 +10,7 @@ $((): void =>  {
         $stateProvider.state('home', {
             url: "/",
             templateUrl: "static/client/partials/home.html",
-            controller: "HomeController"
+            controller: "HomeController as HomeCtrl"
         })
         .state('about', {
             url: "/about",
