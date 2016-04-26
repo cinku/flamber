@@ -3,7 +3,7 @@ namespace main.controllers {
         flames: flamber.interfaces.Flames[];
         
         constructor(private $scope: ng.IScope, private $http: ng.IHttpService){
-            $http.get('/flames').then((response) => this.flames = response.data['flame'] as flamber.interfaces.Flames[] );
+            //$http.get('/flames').then((response) => this.flames = response.data['flame'] as flamber.interfaces.Flames[] );
             // $scope.$on('$viewContentLoaded', (event) => {
             //     $http.get('/flames').then((response) => {
             //         this.flames = response.data['flame'] as flamber.interfaces.Flames[];
