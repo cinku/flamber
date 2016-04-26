@@ -84,7 +84,7 @@ class FlameSchema(Schema):
     id = fields.Integer()
     text = fields.String()
     pub_date = fields.DateTime()
-    #user = fields.Nested('UserSchema', only=['id'])
+    user = fields.Nested('UserSchema', only=['id'])
 
 class Users(Resource):
     # decorators = [jwt_required()]

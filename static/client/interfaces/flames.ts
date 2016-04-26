@@ -3,5 +3,6 @@ namespace flamber.interfaces {
         id: number;
         text: string;
         pub_date: string;
+        user_id: number;
     }
 }
