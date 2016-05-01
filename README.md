@@ -1,7 +1,9 @@
 # Flamber
 
-Twitter clone created for learning purposes of ember.js.
-Made with Ember.js and python-flask.
+Twitter clone created for learning purposes of angular and typescript.
+Made with Angular.js (typescript) and python-flask.
+
+(old implementation with Ember is on 'the-ember-way' branch.
 
 ## Flamber (Flask+ember - if it wasnt obvious)
 
