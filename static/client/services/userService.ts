@@ -4,8 +4,12 @@ namespace flamber.services {
         
         }
         
-        public getUsers() : string {
-            return "test";
+        
+        //fix this shit its probably so wrong
+        public getUsers(): ng.IHttpPromise<flamber.interfaces.Flames[]> {
+            return this.$http.get('/flames').then((response) => { 
+                return response.data['flame'] as flamber.interfaces.Flames[];
+            });
         }
     }
 }
