@@ -11,5 +11,11 @@ namespace flamber.services {
                 return response.data['user'] as flamber.interfaces.User[];
             });
         }
+        
+        public getUser(id: number): ng.IHttpPromise<flamber.interfaces.User[]> {
+            return this.$http.get('/users/' + id).then((response) => {
+               return response.data['user'] as flamber.interfaces.User;
+            });
+        }
     }
 }
