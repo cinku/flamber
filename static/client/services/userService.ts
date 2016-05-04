@@ -6,9 +6,9 @@ namespace flamber.services {
         
         
         //fix this shit its probably so wrong
-        public getUsers(): ng.IHttpPromise<flamber.interfaces.Flames[]> {
-            return this.$http.get('/flames').then((response) => { 
-                return response.data['flame'] as flamber.interfaces.Flames[];
+        public getUsers(): ng.IHttpPromise<flamber.interfaces.User[]> {
+            return this.$http.get('/users').then((response) => { 
+                return response.data['user'] as flamber.interfaces.User[];
             });
         }
     }
