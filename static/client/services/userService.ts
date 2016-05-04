@@ -1,6 +1,6 @@
 namespace flamber.services {
     export class UserService {
-        constructor(){
+        constructor(private $http: ng.IHttpService){
         
         }
         
