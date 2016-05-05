@@ -6,7 +6,7 @@
   "files": [
     "./typings.d.ts",
     
-    "static/client/interfaces/flames.ts",
+    "static/client/interfaces/flame.ts",
     "static/client/interfaces/user.ts",
     
     "static/client/services/userService.ts",

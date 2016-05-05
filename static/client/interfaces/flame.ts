@@ -1,5 +1,5 @@
 namespace flamber.interfaces {
-    export interface Flames {
+    export interface Flame {
         id: number;
         text: string;
         pub_date: string;

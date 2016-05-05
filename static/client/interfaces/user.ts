@@ -4,6 +4,6 @@ namespace flamber.interfaces {
         name: string;
         username: string;
         email: string;
-        flames: flamber.interfaces.Flames[];
+        flames: flamber.interfaces.Flame[];
     }
 }
