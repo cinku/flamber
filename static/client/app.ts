@@ -2,6 +2,8 @@ $((): void =>  {
     let flamberApp: angular.IModule = angular.module('flamberApp', ['ui.router', 'ngMaterial']);
     
     //flamberApp.controller("HomeController", main.controllers.HomeController);
+    flamberApp.service("UserService", flamber.services.UserService);
+    flamberApp.service("FlameService", flamber.services.FlameService);
     
     flamberApp.config(['$urlRouterProvider', '$stateProvider', ($urlRouterProvider: ng.ui.IUrlRouterProvider,
                                                                 $stateProvider: ng.ui.IStateProvider) => {
