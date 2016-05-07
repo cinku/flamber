@@ -5,7 +5,7 @@ namespace main.controllers {
         static $inject = ['$scope', 'FlameService'];
         
         constructor(private $scope: ng.IScope, private flameService: flamber.services.FlameService){
-
+            console.log(flameService);
         }
     }
 }

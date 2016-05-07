@@ -11,7 +11,8 @@ $((): void =>  {
         $urlRouterProvider.otherwise("/");
         $stateProvider.state('home', {
             url: "/",
-            templateUrl: "static/client/partials/home.html"
+            templateUrl: "static/client/partials/home.html",
+            controller: "HomeController"
         })
         .state('about', {
             url: "/about",
