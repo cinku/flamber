@@ -1,5 +1,8 @@
 namespace flamber.services {
     export class FlameService {
+        
+        static $inject = ['$http'];
+        
         constructor(private $http: ng.IHttpService){
             
         }

@@ -3,6 +3,8 @@ namespace main.controllers {
         username: string;
         password: string;
         
+        static $inject = ['$scope', '$http'];
+        
         constructor(private $scope: ng.IScope, private $http: ng.IHttpService){
 
         }
