@@ -2,6 +2,7 @@ $((): void =>  {
     let flamberApp: angular.IModule = angular.module('flamberApp', ['ui.router', 'ngMaterial']);
     
     flamberApp.controller("HomeController", main.controllers.HomeController);
+    flamberApp.controller("LoginController", main.controllers.LoginController);
     flamberApp.service("UserService", flamber.services.UserService);
     flamberApp.service("FlameService", flamber.services.FlameService);
     
