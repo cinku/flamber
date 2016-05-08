@@ -17,6 +17,11 @@ $((): void =>  {
         .state('about', {
             url: "/about",
             templateUrl: "static/client/partials/about.html"
+        })
+        .state('login', {
+            url: "/login",
+            templateUrl: "static/client/partials/login.html",
+            controller: "LoginController as LoginCtrl"
         });
     }]);
     
