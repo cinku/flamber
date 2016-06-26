@@ -32,8 +32,8 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
     flames = db.relationship('Flame', backref='user', lazy='dynamic')
     
-    # def hash_password(self, password):
-    #     self.password_hash = pwd_context.encrypt(password)
+    def hash_password(self, password):
+        self.password_hash = pwd_context.encrypt(password)
         
     # def verify_password(self, password):
     #     return pwd_context.verify(password, self.password_hash)
@@ -92,7 +92,15 @@ class Users(Resource):
         return jsonify({'users': [UserSchema().dump(i).data for i in User.query.all()]})
         
     def post(self):
-        user = UserSchema().load(request.json['user']).data
+        username = request.json.get('username')
+        password = request.json.get('password')
+        email = request.json.get('email')
+        if username is None or password is None or email is None:
+            abort(400)
+        if User.query.filter_by(username = username).first() is not None:
+            abort(400)
+        user = User(username = username, email = email)
+        user.hash_password(password)
         db.session.add(user)
         db.session.commit()
         return 200

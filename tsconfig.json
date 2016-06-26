@@ -14,6 +14,7 @@
     
     "static/client/controllers/homeController.ts",
     "static/client/controllers/loginController.ts",
+    "static/client/controllers/authController.ts",
     
     "static/client/app.ts"
   ]

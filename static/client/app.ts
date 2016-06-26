@@ -1,8 +1,8 @@
 $((): void =>  {
     let flamberApp: angular.IModule = angular.module('flamberApp', ['ui.router', 'ngMaterial']);
     
-    flamberApp.controller("HomeController", main.controllers.HomeController);
-    flamberApp.controller("LoginController", main.controllers.LoginController);
+    // flamberApp.controller("HomeController", main.controllers.HomeController);
+    // flamberApp.controller("LoginController", main.controllers.LoginController);
     flamberApp.service("UserService", flamber.services.UserService);
     flamberApp.service("FlameService", flamber.services.FlameService);
     
@@ -13,7 +13,8 @@ $((): void =>  {
         $stateProvider.state('home', {
             url: "/",
             templateUrl: "static/client/partials/home.html",
-            controller: "HomeController as HomeCtrl"
+            controller: main.controllers.HomeController,
+            controllerAs: "HomeCtrl"
         })
         .state('about', {
             url: "/about",
@@ -22,7 +23,14 @@ $((): void =>  {
         .state('login', {
             url: "/login",
             templateUrl: "static/client/partials/login.html",
-            controller: "LoginController as LoginCtrl"
+            controller: main.controllers.LoginController,
+            controllerAs: "LoginCtrl"
+        })
+        .state('register', {
+            url: "/register",
+            templateUrl: "static/client/partials/signup.html",
+            controller: main.controllers.AuthController,
+            controllerAs: "AuthCtrl"
         });
     }]);
     
