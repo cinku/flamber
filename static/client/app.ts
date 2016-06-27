@@ -1,5 +1,5 @@
 $((): void =>  {
-    let flamberApp: angular.IModule = angular.module('flamberApp', ['ui.router', 'ngMaterial']);
+    let flamberApp: angular.IModule = angular.module('flamberApp', ['ui.router', 'ngMaterial', 'satellizer']);
     
     // flamberApp.controller("HomeController", main.controllers.HomeController);
     // flamberApp.controller("LoginController", main.controllers.LoginController);

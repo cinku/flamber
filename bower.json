@@ -10,7 +10,8 @@
     "angular-ui-router": "^0.2.18",
     "angular-material": "^1.0.7",
     "jquery": "^2.2.3",
-    "bootstrap-sass": "^3.3.6"
+    "bootstrap-sass": "^3.3.6",
+    "satellizer": "^0.14.1"
   },
   "resolutions": {
     "angular": "^1.5.4"
