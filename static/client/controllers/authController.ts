@@ -6,7 +6,7 @@ namespace main.controllers {
 
         static $inject = ['$scope', '$http', '$auth'];
 
-        constructor(private $scope: ng.IScope, private $http: ng.IHttpService, private $auth: any) {
+        constructor(private $scope: ng.IScope, private $http: ng.IHttpService, private $auth: satellizer.$auth) {
 
         }
 
