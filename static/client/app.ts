@@ -32,6 +32,9 @@ $((): void =>  {
             controller: main.controllers.AuthController,
             controllerAs: "AuthCtrl"
         });
+    }])
+    .config(['$authProvider', ($authprovider: any) => {
+        $authprovider.signupUrl = '/users';
     }]);
     
     flamberApp.run(() => {

@@ -12,7 +12,15 @@ namespace main.controllers {
 
         public signUp() : void {
             let data = { 'username': this.username, 'email': this.email, 'password': this.password };
-            this.$http.post('/users', data);
+            this.$auth.signup(data)
+            .then(function(response){
+                console.log('success');
+                console.log(response);
+            })
+            .catch(function(response) {
+               console.log('error');
+               console.log(response);                
+            });
         }
     }
 }
