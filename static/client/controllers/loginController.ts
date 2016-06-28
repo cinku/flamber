@@ -3,9 +3,12 @@ namespace main.controllers {
         private username: string;
         private password: string;
         
-        static $inject = ['$scope', '$http', '$auth'];
+        static $inject = ['$scope', '$http', '$auth', '$rootScope'];
         
-        constructor(private $scope: ng.IScope, private $http: ng.IHttpService, private $auth: satellizer.$auth){
+        constructor(private $scope: ng.IScope,
+                    private $http: ng.IHttpService,
+                    private $auth: satellizer.$auth,
+                    private $rootScope: any){ //extend rootscope in the future
 
         }
         
@@ -14,7 +17,7 @@ namespace main.controllers {
             this.$auth.login(user)
             .then((response) => {
                 console.log('success logging in');
-                console.log(response);                
+                console.log(response);
             })
             .catch((response) => {
                 console.log('error logging in');
