@@ -31,14 +31,23 @@ $((): void =>  {
             templateUrl: "static/client/partials/signup.html",
             controller: main.controllers.AuthController,
             controllerAs: "AuthCtrl"
-        });
+        })
+        .state('logout', {
+            url: "/logout",
+            controller: function($auth: satellizer.$auth) {
+                $auth.logout();
+            }
+    });
     }])
     .config(['$authProvider', ($authprovider: any) => {
         $authprovider.signupUrl = '/users';
     }]);
     
-    flamberApp.run(() => {
-       // run 
+    flamberApp.run(($rootScope: any, $auth: satellizer.$auth) => {
+       // run
+       $rootScope.isAuthenticated = () => {
+           return $auth.isAuthenticated();
+        }
     });
     
     angular.bootstrap(document, ['flamberApp']);

@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, jsonify, request, g, render_template
+from flask import Flask, send_from_directory, jsonify, request, g, render_template, make_response
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
@@ -7,9 +7,9 @@ from marshmallow import Schema, fields
 from datetime import datetime
 from passlib.apps import custom_app_context as pwd_context
 # from flask.ext.httpauth import HTTPBasicAuth
-# from itsdangerous import (TimedJSONWebSignatureSerializer
-#                           as Serializer, BadSignature, SignatureExpired)
-# from flask_jwt import JWT, jwt_required, current_identity
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
+from flask_jwt import JWT, jwt_required, current_identity
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -35,12 +35,12 @@ class User(db.Model):
     def hash_password(self, password):
         self.password_hash = pwd_context.encrypt(password)
         
-    # def verify_password(self, password):
-    #     return pwd_context.verify(password, self.password_hash)
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
         
-    # def generate_auth_token(self, expiration=600):
-    #     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-    #     return s.dumps({'id': self.id})
+    def generate_auth_token(self, expiration=600):
+        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'id': self.id})
         
 # @auth.verify_password
 # def verify_password(username_or_token, password):
@@ -48,12 +48,12 @@ class User(db.Model):
 #     g.user = user
 #     return True
 
-# def authenticate(username, password):
-#     user = User.query.filter_by(username=username).first()
-#     if not user or not user.verify_password(password):
-#         return None
-#     g.user = user
-#     return user
+def authenticate(username, password):
+    user = User.query.filter_by(username=username).first()
+    if not user or not user.verify_password(password):
+        return None
+    # g.user = user
+    return user
 
 # def identity(payload):
 #     user_id = payload['identity']
@@ -96,9 +96,9 @@ class Users(Resource):
         password = request.json.get('password')
         email = request.json.get('email')
         if username is None or password is None or email is None:
-            abort(400)
+            return 400
         if User.query.filter_by(username = username).first() is not None:
-            abort(400)
+            return 400
         user = User(username = username, email = email)
         user.hash_password(password)
         db.session.add(user)
@@ -131,15 +131,21 @@ class FlamesId(Resource):
         db.session.commit()
         return 200
 
-# class Auth(Resource):
-#     def post(self):
-#         token = g.user.generate_auth_token(600)
-#         return jsonify({'token': token.decode('ascii'), 'duration': 600})
+class Auth(Resource):
+    def post(self):
+        username = request.json.get('username')
+        password = request.json.get('password')
+        user = authenticate(username, password)
+        if user is not None:
+            token = user.generate_auth_token(600) 
+            return make_response(jsonify({'token': token.decode('ascii')}), 200)
+        return 401
         
 api.add_resource(Users, '/users')
 api.add_resource(Flames, '/flames')
 api.add_resource(UsersId, '/users/<int:user_id>')
 api.add_resource(FlamesId, '/flames/<int:flame_id>')
+api.add_resource(Auth, '/auth/login')
 
 if __name__ == "__main__":
     app.run(debug=True)
