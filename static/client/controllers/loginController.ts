@@ -18,6 +18,7 @@ namespace main.controllers {
             .then((response) => {
                 console.log('success logging in');
                 console.log(response);
+                this.$rootScope.username = this.$auth.getPayload()['name'];
             })
             .catch((response) => {
                 console.log('error logging in');

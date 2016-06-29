@@ -42,7 +42,9 @@
             <a ui-sref="login">Login</a>
           </li>
           <li ng-if="isAuthenticated()">
-            <a ui-sref="logout">Logout</a>
+            {% raw %}            
+            <p class="navbar-text navbar-right">Signed in as {{ username }} <a ui-sref="logout">Logout</a></p>
+            {% endraw %}
           </li>
         </ul>
         <!--<ul class="nav navbar-nav navbar-right">
