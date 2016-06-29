@@ -47,7 +47,8 @@ $((): void =>  {
        // run
        $rootScope.isAuthenticated = () => {
            return $auth.isAuthenticated();
-        }
+        };
+        $rootScope.username = $auth.isAuthenticated()? $auth.getPayload()['name'] : '';
     });
     
     angular.bootstrap(document, ['flamberApp']);
