@@ -3,12 +3,13 @@ namespace main.controllers {
         private username: string;
         private password: string;
         
-        static $inject = ['$scope', '$http', '$auth', '$rootScope'];
+        static $inject = ['$scope', '$http', '$auth', '$rootScope', '$state'];
         
         constructor(private $scope: ng.IScope,
                     private $http: ng.IHttpService,
                     private $auth: satellizer.$auth,
-                    private $rootScope: any){ //extend rootscope in the future
+                    private $rootScope: any,
+                    private $state: ng.ui.IStateService){ //extend rootscope in the future
 
         }
         
@@ -19,6 +20,7 @@ namespace main.controllers {
                 console.log('success logging in');
                 console.log(response);
                 this.$rootScope.username = this.$auth.getPayload()['name'];
+                this.$state.go('home');
             })
             .catch((response) => {
                 console.log('error logging in');

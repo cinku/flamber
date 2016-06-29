@@ -4,9 +4,9 @@ namespace main.controllers {
         private email: string;
         private password: string;
 
-        static $inject = ['$scope', '$http', '$auth'];
+        static $inject = ['$scope', '$http', '$auth', '$state'];
 
-        constructor(private $scope: ng.IScope, private $http: ng.IHttpService, private $auth: satellizer.$auth) {
+        constructor(private $scope: ng.IScope, private $http: ng.IHttpService, private $auth: satellizer.$auth, private $state: ng.ui.IStateService) {
 
         }
 
@@ -16,6 +16,7 @@ namespace main.controllers {
             .then(function(response){
                 console.log('success');
                 console.log(response);
+                this.$state.go('home');
             })
             .catch(function(response) {
                console.log('error');
