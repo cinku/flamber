@@ -3,13 +3,17 @@
     color: #fff;
 }
 
+.navbar {
+    border-bottom: 2px solid #21aeec;
+}
+
 .nav {
     li {
         a {
-            color: #fff !important;
+            color: #21aeec !important;
 
             &:hover {
-                color: #fa9200 !important;
+                color: #fff !important;
             }
         }
     }
