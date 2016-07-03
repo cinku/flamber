@@ -29,3 +29,5 @@ gulp.task('watch_sass', function() {
 });
 
 gulp.task('default', ['compile_ts', 'compile_sass']);
+
+gulp.task('watch', ['watch_ts', 'watch_sass']);

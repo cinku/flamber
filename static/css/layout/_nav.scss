@@ -1,9 +1,18 @@
 .global-nav {
-    background-color: #fff;
+    background-color: #000;
+    color: #fff;
 }
 
-.nav-list > li > a:hover {
-    color: #fa9200 !important;
+.nav {
+    li {
+        a {
+            color: #fff !important;
+
+            &:hover {
+                color: #fa9200 !important;
+            }
+        }
+    }
 }
 
 .flamber-logo {
