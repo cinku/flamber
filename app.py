@@ -9,7 +9,8 @@ from passlib.apps import custom_app_context as pwd_context
 # from flask.ext.httpauth import HTTPBasicAuth
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
-from flask_jwt import JWT, jwt_required, current_identity
+# from flask_jwt import JWT, jwt_required, current_identity
+import jwt
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -39,8 +40,10 @@ class User(db.Model):
         return pwd_context.verify(password, self.password_hash)
         
     def generate_auth_token(self):
-        s = Serializer(app.config['SECRET_KEY'])
-        return s.dumps({'id': self.id, 'name': self.name, 'email': self.email})
+        #s = Serializer(app.config['SECRET_KEY'])
+        payload = {'id': self.id, 'name': self.name, 'email': self.email}
+        return jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
+        #return s.dumps({'id': self.id, 'name': self.name, 'email': self.email})
         
 # @auth.verify_password
 # def verify_password(username_or_token, password):
