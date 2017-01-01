@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "static",
-      "outDir": "dist",
+      "outDir": "static/dist",
       "assets": [
         "assets",
         "favicon.ico"
@@ -18,7 +18,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "styles.scss"
       ],
       "scripts": [],
       "environments": {
@@ -41,7 +41,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "prefixInterfaces": false,
     "inline": {
       "style": false,
