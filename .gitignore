@@ -72,7 +72,7 @@ target/
 pip*
 /node_modules/
 flamber.db
-static/dist/
+app/static/dist/
 
 # IDE - VSCode
 .vscode/*
