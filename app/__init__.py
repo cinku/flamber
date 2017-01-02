@@ -149,6 +149,3 @@ api.add_resource(Flames, '/flames')
 api.add_resource(UsersId, '/users/<int:user_id>')
 api.add_resource(FlamesId, '/flames/<int:flame_id>')
 api.add_resource(Auth, '/auth/login')
-
-if __name__ == "__main__":
-    app.run(debug=True)
