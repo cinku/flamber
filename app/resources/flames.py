@@ -2,7 +2,6 @@ from flask_restful import Resource
 from app import api
 
 class Flames(Resource):
-    # decorators = [jwt_required()]
     def post(self):
         flame = request.json['flame']
         f = Flame(text=flame['text'], user_id=1)

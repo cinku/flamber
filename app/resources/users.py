@@ -2,7 +2,6 @@ from flask_restful import Resource
 from app import api
 
 class Users(Resource):
-    # decorators = [jwt_required()]
     def get(self):
         return jsonify({'users': [UserSchema().dump(i).data for i in User.query.all()]})
         
