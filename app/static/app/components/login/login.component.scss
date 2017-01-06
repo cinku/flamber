@@ -1,0 +1,48 @@
+.login__form {
+    width: 320px;
+    background-color: #53e3a6;
+    padding: 30px;
+    border-radius: 5px;
+    color: white;
+	font-weight: 300;
+	
+	::-webkit-input-placeholder { /* WebKit browsers */
+			color:    white;
+		font-weight: 300;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		 color:    white;
+		 opacity:  1;
+		font-weight: 300;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+		 color:    white;
+		 opacity:  1;
+		font-weight: 300;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+		 color:    white;
+		font-weight: 300;
+	}
+}
+
+.login__form__button {
+    width: 100%;
+}
+
+.login__form__input {
+    text-align: center;
+    margin-bottom: 10px;
+    border: 1px solid fade-out(white, 0.4);
+    background-color: fade-out(white, 0.8);
+    transition: all 0.3s ease-in-out;
+    &:hover{
+			background-color: fade-out(white, 0.6);
+		}
+		
+		&:focus{
+			background-color: white;
+			
+			color: #53e3a6;
+		}
+}
