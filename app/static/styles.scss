@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+
+.sign__form {
+    width: 320px;
+    background-color: #53e3a6;
+    padding: 30px;
+    border-radius: 5px;
+    color: white !important;
+	font-weight: 300 !important;
+	
+	::-webkit-input-placeholder { /* WebKit browsers */
+        color: white !important;
+		font-weight: 300 !important;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: white !important;
+        opacity:  1 !important;
+		font-weight: 300 !important;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    white !important;
+        opacity:  1 !important;
+		font-weight: 300 !important;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+        color:    white !important;
+		font-weight: 300 !important;
+	}
+}
+
+.sign__form__button {
+    width: 100%;
+}
+
+.sign__form__input {
+    text-align: center;
+    margin-bottom: 10px;
+    border: 1px solid fade-out(white, 0.4) !important;
+    background-color: fade-out(white, 0.8) !important;
+    transition: all 0.3s ease-in-out !important;
+
+    &:hover{
+        background-color: fade-out(white, 0.6) !important;
+    }
+    
+    &:focus{
+        background-color: white !important;
+        color: #53e3a6 !important;
+    }
+}
