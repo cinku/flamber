@@ -15,4 +15,4 @@ manager.add_command('db', MigrateCommand)
 from app import views
 from app.models import user, flame
 from app.schemas import user, flame
-from app.resources import users, flames
+from app.resources import users, flames, auth
