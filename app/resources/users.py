@@ -1,6 +1,6 @@
 from flask_restful import Resource
-from flask import jsonify
-from app import api
+from flask import jsonify, request
+from app import api, db
 from app.models.user import User
 from app.schemas.user import UserSchema
 
@@ -17,7 +17,7 @@ class Users(Resource):
         if User.query.filter_by(username = username).first() is not None:
             return 400
         user = User(username = username, email = email)
-        user.hash_password(password)
+        #user.hash_password(password)
         db.session.add(user)
         db.session.commit()
         return 200

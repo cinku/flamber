@@ -1,10 +1,13 @@
 from flask_restful import Resource
-from app import api
+from flask import jsonify, request
+from app.models.flame import Flame
+from app.schemas.flame import FlameSchema
+from app import api, db
 
 class Flames(Resource):
     def post(self):
-        flame = request.json['flame']
-        f = Flame(text=flame['text'], user_id=1)
+        flame = request.json.get('text')
+        f = Flame(text=flame, user_id=1)
         db.session.add(f)
         db.session.commit()
         return 200
