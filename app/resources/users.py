@@ -1,5 +1,8 @@
 from flask_restful import Resource
+from flask import jsonify
 from app import api
+from app.models.user import User
+from app.schemas.user import UserSchema
 
 class Users(Resource):
     def get(self):
