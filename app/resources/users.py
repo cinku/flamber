@@ -1,4 +1,4 @@
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from flask import jsonify, request
 from app import api, db
 from app.models.user import User
@@ -13,9 +13,9 @@ class Users(Resource):
         password = request.json.get('password')
         email = request.json.get('email')
         if username is None or password is None or email is None:
-            return 400
+            return abort(400, error='Username and/or password and/or email cannot be empty')
         if User.query.filter_by(username = username).first() is not None:
-            return 400
+            return abort(400, error='User with that username already exists')
         user = User(username = username, email = email)
         user.hash_password(password)
         db.session.add(user)
