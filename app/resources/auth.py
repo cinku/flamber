@@ -1,7 +1,6 @@
 from flask_restful import Resource, abort
 from flask import request, json, jsonify, make_response
 from app import api
-from app import app
 from app.models.user import User
 from app.schemas.user import UserSchema
 from flask_jwt_extended import create_access_token
@@ -27,9 +26,4 @@ def authenticate(username, password):
 #     user_id = payload['identity']
 #     return User.query.filter_by(user_id=user_id).first()
 
-# jwt = JWT(app, authenticate, identity)
-
-# @jwt.jwt_payload_handler
-# def make_payload(identity):
-#     return {'identity': identity.id, 'username': identity.username}
 api.add_resource(Auth, '/login')
