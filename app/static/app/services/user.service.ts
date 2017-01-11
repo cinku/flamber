@@ -16,7 +16,7 @@ export class UserService {
     	headers.append('Content-Type', 'application/json');
 		return this
 			.http
-			.post('/auth', JSON.stringify({ username: username, password: password }), { headers })
+			.post('/login', JSON.stringify({ username: username, password: password }), { headers })
 			.map(response => response.json())
 			.map(response => {
 				if(response.success) {
