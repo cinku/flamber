@@ -45,4 +45,26 @@ export class UserService {
 		return this.loggedIn;
 	}
 
+	public register(username: string, mail: string, password: string): Observable<any> {
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		return this.http
+			.post('/users', JSON.stringify({ username: username, email: mail, password: password }), { headers })
+			.map((response) => response.json())
+			.catch((error) => {
+				let errMsg: string;
+				if (error instanceof Response) {
+					const body = error.json() || '';
+					const err = body.error || JSON.stringify(body);
+					errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+				} else {
+					errMsg = error.message ? error.message : error.toString();
+				}
+				return Observable.throw(errMsg);
+			})
+			.map(resp => {
+				console.log('user signed up');
+			});
+	}
+
 }
