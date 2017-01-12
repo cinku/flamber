@@ -16,6 +16,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	public login() {
-		this.userService.login(this.username, this.password).subscribe(r => console.log(r));
+		this.userService.login(this.username, this.password).subscribe(() => {});
 	}
 }

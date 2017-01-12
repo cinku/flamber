@@ -11,25 +11,33 @@ export class UserService {
 		this.loggedIn = !!localStorage.getItem('auth_token');
 	}
 
-	public login(username: string, password: string): Observable<Response> {
+	public login(username: string, password: string): Observable<any> {
 		let headers = new Headers();
-    	headers.append('Content-Type', 'application/json');
-		return this
-			.http
+		headers.append('Content-Type', 'application/json');
+		return this.http
 			.post('/login', JSON.stringify({ username: username, password: password }), { headers })
-			.map(response => response.json())
-			.map(response => {
-				if(response.success) {
-					localStorage.setItem('auth_token', response.auth_token);
-					this.loggedIn = true;
+			.map((response) => response.json())
+			.catch((error) => {
+				let errMsg: string;
+				if (error instanceof Response) {
+					const body = error.json() || '';
+					const err = body.error || JSON.stringify(body);
+					errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+				} else {
+					errMsg = error.message ? error.message : error.toString();
 				}
-
-				return response.success;
+				return Observable.throw(errMsg);
+			})
+			.map(resp => {
+				localStorage.setItem('auth_token', resp.auth_token);
+				localStorage.setItem('user_profile', resp.profile);
+				this.loggedIn = true;
 			});
 	}
 
 	public logout(): void {
 		localStorage.removeItem('auth_token');
+		localStorage.removeItem('user_profile');
 		this.loggedIn = false;
 	}
 
