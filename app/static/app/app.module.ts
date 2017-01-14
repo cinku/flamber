@@ -1,3 +1,4 @@
+import { requestOptionsProvider } from './services/default-request-options.service';
 import { UserService } from './services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -20,6 +21,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     HttpModule
   ],
   providers: [
+    requestOptionsProvider,
     UserService
   ],
   bootstrap: [AppComponent]
