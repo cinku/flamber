@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './routing/app-routing.module';
 import { requestOptionsProvider } from './services/default-request-options.service';
 import { UserService } from './services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +21,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    ToastModule
+    ToastModule,
+    AppRoutingModule
   ],
   providers: [
     requestOptionsProvider,
