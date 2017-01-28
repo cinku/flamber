@@ -1,8 +1,10 @@
 from app import app
-from flask import render_template
+from flask import render_template, send_from_directory
 
-@app.route('/', defaults={'path': ''})
+@app.route('/')
+def index():
+    return app.send_static_file('dist/index.html')
+
 @app.route('/<path:path>')
-def index(path):
-    #return app.send_static_file('sdist/index.html')
-    return render_template('index.html')
+def static_files(path):
+    return app.send_static_file('dist/' + path)
