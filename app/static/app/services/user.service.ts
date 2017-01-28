@@ -30,7 +30,7 @@ export class UserService {
 			})
 			.map(resp => {
 				localStorage.setItem('auth_token', resp.auth_token);
-				localStorage.setItem('user_profile', resp.profile);
+				localStorage.setItem('user_profile', JSON.stringify(resp.profile));
 				this.loggedIn = true;
 			});
 	}
@@ -39,6 +39,14 @@ export class UserService {
 		localStorage.removeItem('auth_token');
 		localStorage.removeItem('user_profile');
 		this.loggedIn = false;
+	}
+
+	public getUser(): string {
+		if (this.isLoggedIn()) {
+			let user = JSON.parse(localStorage.getItem('user_profile'));
+			return user['name'];
+		} 
+		return '';
 	}
 
 	public isLoggedIn(): boolean {

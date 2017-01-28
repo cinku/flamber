@@ -10,12 +10,14 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
