@@ -1,3 +1,5 @@
+import { UserProfileComponent } from './../components/user-profile/user-profile.component';
+import { HomeComponent } from './../components/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -9,12 +11,20 @@ const routes: Routes = [
         path: '',
         children: [
             {
+                path: '',
+                component: HomeComponent
+            },
+            {
                 path: 'login',
                 component: LoginComponent
             },
             {
                 path: 'signup',
                 component: SignUpComponent
+            },
+            {
+                path: ':username',
+                component: UserProfileComponent
             }
         ]
      }
